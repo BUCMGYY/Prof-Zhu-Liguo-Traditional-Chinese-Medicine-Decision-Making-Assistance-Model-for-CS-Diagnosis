@@ -23,15 +23,65 @@ model = joblib.load('MLP.pkl')
 
 # 特征范围定义（根据提供的特征范围和数据类型）
 feature_ranges = {
-    "主要症状": {"type": "categorical", "options": [0, 1, 2, 3, 4]},
+    "主要症状": {"type": "categorical", "options": [0, 1, 2, 3, 4],"description": {
+            0: "颈痛",
+            1: "颈痛伴活动受限",
+            2: "颈痛伴上肢痛",
+            3: "颈痛伴上肢无力",
+            4: "颈痛伴头晕头痛"
+        }},
     "年龄": {"type": "numerical", "min": 14.0, "max": 88.0, "default": 50.0},
-    "恶风寒": {"type": "categorical", "options": [0, 1]},
-    "持续时间": {"type": "categorical", "options": [0, 1, 2, 3, 4]},
-    "旋颈试验": {"type": "categorical", "options": [0, 1]},
-    "脉象": {"type": "categorical", "options": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]},
-    "舌质": {"type": "categorical", "options": [0, 1, 2, 3]},
-    "诱因": {"type": "categorical", "options": [0, 1, 2, 3]},
-    "颈椎屈伸运动试验": {"type": "categorical", "options": [0, 1]},
+    "恶风寒": {"type": "categorical", "options": [0, 1],
+        "description": {
+            0: "无",
+            1: "有"
+        }},
+    "持续时间": {"type": "categorical", "options": [0, 1, 2, 3, 4],
+        "description": {
+            0: "1周以内",
+            1: "1周-1月",
+            2: "1月-3月",
+            3: "3月-1年",
+            4: "1年以上"
+        }},
+    "旋颈试验": {"type": "categorical", "options": [0, 1],
+        "description": {
+            0: "无",
+            1: "有"
+        }},
+    "脉象": {"type": "categorical", "options": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        "description": {
+            0: "脉沉",
+            1: "脉浮",
+            2: "脉滑",
+            3: "脉濡",
+            4: "脉缓",
+            5: "脉紧",
+            6: "脉弱",
+            7: "脉细",
+            8: "脉涩",
+            9: "脉弦",
+            10: "脉数"
+        }},
+    "舌质": {"type": "categorical", "options": [0, 1, 2, 3],
+        "description": {
+            0: "舌暗",
+            1: "舌红",
+            2: "舌淡",
+            3: "舌胖"
+        }},
+    "诱因": {"type": "categorical", "options": [0, 1, 2, 3],
+        "description": {
+            0: "无",
+            1: "风寒",
+            2: "伏案",
+            3: "落枕"
+        }},
+    "颈椎屈伸运动试验": {"type": "categorical", "options": [0, 1],
+        "description": {
+            0: "无",
+            1: "有"
+        }},
 }
 
 # Streamlit 界面
