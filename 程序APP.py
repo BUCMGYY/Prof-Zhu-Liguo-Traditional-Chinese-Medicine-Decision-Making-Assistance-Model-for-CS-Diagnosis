@@ -66,18 +66,7 @@ category_mapping = {
     3: "肝肾亏虚",
     4: "气虚血瘀"
 }
-# 创建英文特征名称映射
-english_feature_names = {
-    "主要症状": "Main Symptoms",
-    "年龄": "Age",
-    "恶风寒": "Wind Cold",
-    "持续时间": "Duration",
-    "旋颈试验": "Neck Test",
-    "脉象": "Pulse Type",
-    "舌质": "Tongue Quality",
-    "诱因": "Trigger",
-    "颈椎屈伸运动试验": "Neck Flexion Test",
-}
+
 # 预测与 SHAP 可视化
 if st.button("预测"):
     # 模型预测
@@ -108,6 +97,10 @@ if st.button("预测"):
     plt.savefig("prediction_text.png", bbox_inches='tight', dpi=300)
     st.image("prediction_text.png")
 
+    # 设置字体
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 使用黑体
+
     # 计算 SHAP 值
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_ranges.keys()))
@@ -120,10 +113,7 @@ if st.button("预测"):
         pd.DataFrame([feature_values], columns=feature_ranges.keys()),
         matplotlib=True,
     )
-    # 更新特征名称为英文
-    plt.xlabel("SHAP Value")
-    plt.ylabel("Features")
-    plt.xticks(ticks=range(len(feature_ranges)), labels=[english_feature_names[key] for key in feature_ranges.keys()])
+
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
