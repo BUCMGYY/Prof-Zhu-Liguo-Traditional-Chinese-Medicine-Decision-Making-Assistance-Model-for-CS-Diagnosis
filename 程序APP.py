@@ -71,14 +71,15 @@ if st.button("预测"):
     text = f"根据特征值，预测类别为: {predicted_class}，各类别概率：\n"
     for i, prob in enumerate(probabilities):
         text += f"类别 {i}: {prob:.2f}%\n"
-
+    # 加载字体文件
+    prop = fm.FontProperties(fname=font_path)
     # 显示预测结果，使用 Matplotlib 渲染指定字体
     fig, ax = plt.subplots(figsize=(8, 1))
     ax.text(
         0.5, 0.5, text,
         fontsize=16,
         ha='center', va='center',
-        fontname='SimHei',  # 确保使用支持中文的字体
+        fontproperties=prop,  # 使用加载的字体
         transform=ax.transAxes
     )
     ax.axis('off')
