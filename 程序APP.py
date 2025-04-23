@@ -109,9 +109,7 @@ if st.button("预测"):
         pd.DataFrame([feature_values], columns=feature_ranges.keys()),
         matplotlib=True,
     )
-    # 保存 SHAP 力图为 HTML
-    shap.save_html("shap_force_plot.html", shap_fig)
-
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
+
