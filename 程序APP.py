@@ -97,6 +97,8 @@ if st.button("预测"):
     plt.savefig("prediction_text.png", bbox_inches='tight', dpi=300)
     st.image("prediction_text.png")
 
+    # 添加字体路径
+    fm.fontManager.addfont(font_path)
     # 设置字体
     plt.rcParams['font.family'] = 'sans-serif'
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 使用黑体
