@@ -58,6 +58,15 @@ for feature, properties in feature_ranges.items():
 # 转换为模型输入格式
 features = np.array([feature_values])
 
+# 定义类别映射字典
+category_mapping = {
+    0: "气滞血瘀",
+    1: "风寒湿痹",
+    2: "肝阳上亢",
+    3: "肝肾亏虚",
+    4: "气虚血瘀"
+}
+
 # 预测与 SHAP 可视化
 if st.button("预测"):
     # 模型预测
@@ -68,9 +77,11 @@ if st.button("预测"):
     probabilities = predicted_proba * 100
 
     # 创建预测结果文本
-    text = f"根据特征值，预测类别为: {predicted_class}，各类别概率：\n"
+    predicted_class_name = category_mapping[predicted_class]  # 获取中文类别名称
+    text = f"根据特征值，预测类别为: {predicted_class_name}，各类别概率：\n"
     for i, prob in enumerate(probabilities):
-        text += f"类别 {i}: {prob:.2f}%\n"
+        category_name = category_mapping[i]  # 获取中文类别名称
+        text += f"{category_name}: {prob:.2f}%\n"
     # 加载字体文件
     prop = fm.FontProperties(fname=font_path)
     # 显示预测结果，使用 Matplotlib 渲染指定字体
@@ -98,6 +109,8 @@ if st.button("预测"):
         pd.DataFrame([feature_values], columns=feature_ranges.keys()),
         matplotlib=True,
     )
+    plt.title("预测类别的SHAP 力图", fontproperties=prop)  # 设置标题字体
+    shap_fig.texts[0].set_fontproperties(prop)  # 设置文本的字体
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
