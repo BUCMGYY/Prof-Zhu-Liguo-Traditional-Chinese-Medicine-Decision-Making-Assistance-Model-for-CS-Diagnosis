@@ -61,10 +61,13 @@ if st.button("预测"):
 
     # 显示预测结果，使用 Matplotlib 渲染指定字体
     fig, ax = plt.subplots(figsize=(8, 1))
-    ax.text(0.5, 0.5, text,
-            ha='center', va='center',
-            fontsize=14,
-            fontproperties=plt.matplotlib.font_manager.FontProperties(fname="SimHei.ttf"))
+    ax.text(
+        0.5, 0.5, text,
+        fontsize=16,
+        ha='center', va='center',
+        fontname='SimHei',  # 确保使用支持中文的字体
+        transform=ax.transAxes
+    )
     ax.axis('off')
     plt.savefig("prediction_text.png", bbox_inches='tight', dpi=300)
     st.image("prediction_text.png")
