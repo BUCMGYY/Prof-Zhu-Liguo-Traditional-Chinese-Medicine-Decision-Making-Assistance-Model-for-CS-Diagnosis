@@ -109,8 +109,15 @@ if st.button("预测"):
         pd.DataFrame([feature_values], columns=feature_ranges.keys()),
         matplotlib=True,
     )
-    plt.title("预测类别的SHAP 力图", fontproperties=prop)  # 设置标题字体
-    shap_fig.texts[0].set_fontproperties(prop)  # 设置文本的字体
+    # 保存 SHAP 力图为 HTML
+    shap.save_html("shap_force_plot.html", shap_fig)
+
+    # 读取 HTML 文件并显示
+    with open("shap_force_plot.html", "r", encoding="utf-8") as f:
+        shap_html = f.read()
+
+    # 使用 Streamlit 显示 HTML
+    st.components.v1.html(shap_html, height=600, scrolling=True)
     # 保存并显示 SHAP 图
-    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
-    st.image("shap_force_plot.png")
+    #plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
+    #st.image("shap_force_plot.png")
