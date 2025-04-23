@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 import shap
 import matplotlib.pyplot as plt
-
+from streamlit_change_language import cst
+cst.change(language='cn')
 # 加载保存的随机森林模型
 model = joblib.load('MLP.pkl')
 
