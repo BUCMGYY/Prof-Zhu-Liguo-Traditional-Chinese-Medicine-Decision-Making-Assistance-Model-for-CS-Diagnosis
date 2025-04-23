@@ -112,12 +112,9 @@ if st.button("预测"):
     # 保存 SHAP 力图为 HTML
     shap.save_html("shap_force_plot.html", shap_fig)
 
-    # 读取 HTML 文件并显示
-    with open("shap_force_plot.html", "r", encoding="utf-8") as f:
-        shap_html = f.read()
-
-    # 使用 Streamlit 显示 HTML
-    st.components.v1.html(shap_html, height=600, scrolling=True)
     # 保存并显示 SHAP 图
     #plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
-    #st.image("shap_force_plot.png")
+    # 保存 SHAP 力图为 PNG
+    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200, fontproperties=fm.FontProperties(fname=font_path))
+    plt.close()  # 关闭图形以释放内存
+    st.image("shap_force_plot.png")
