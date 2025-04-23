@@ -4,8 +4,20 @@ import numpy as np
 import pandas as pd
 import shap
 import matplotlib.pyplot as plt
-from streamlit_change_language import cst
-cst.change(language='cn')
+import matplotlib.font_manager as fm
+import requests
+import os
+
+# 下载字体文件
+font_url = 'https://raw.githubusercontent.com/BUCMGYY/Prof-Zhu-Liguo-Traditional-Chinese-Medicine-Decision-Making-Assistance-Model-for-CS-Diagnosis/main/SimHei.ttf'  # 确保这个链接是正确的
+font_path = 'SimHei.ttf'
+
+# 检查字体文件是否已存在，若不存在则下载
+if not os.path.exists(font_path):
+    response = requests.get(font_url)
+    with open(font_path, 'wb') as f:
+        f.write(response.content)
+
 # 加载保存的随机森林模型
 model = joblib.load('MLP.pkl')
 
@@ -26,7 +38,7 @@ feature_ranges = {
 st.title("朱立国教授名老中医颈椎病辨证决策辅助模型")
 
 # 动态生成输入项
-st.header("Enter the following feature values:")
+st.header("请输入以下特征:")
 feature_values = []
 for feature, properties in feature_ranges.items():
     if properties["type"] == "numerical":
