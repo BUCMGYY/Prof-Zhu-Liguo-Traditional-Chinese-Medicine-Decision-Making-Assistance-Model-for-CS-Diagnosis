@@ -22,7 +22,7 @@ feature_ranges = {
 }
 
 # Streamlit 界面
-st.title("朱立国名老中医颈椎病辨证决策辅助模型")
+st.title("朱立国教授名老中医颈椎病辨证决策辅助模型")
 
 # 动态生成输入项
 st.header("Enter the following feature values:")
@@ -61,13 +61,10 @@ if st.button("预测"):
 
     # 显示预测结果，使用 Matplotlib 渲染指定字体
     fig, ax = plt.subplots(figsize=(8, 1))
-    ax.text(
-        0.5, 0.5, text,
-        fontsize=16,
-        ha='center', va='center',
-        fontname='SimHei',
-        transform=ax.transAxes
-    )
+    ax.text(0.5, 0.5, text,
+            ha='center', va='center',
+            fontsize=14,
+            fontproperties=plt.matplotlib.font_manager.FontProperties(fname="SimHei.ttf"))
     ax.axis('off')
     plt.savefig("prediction_text.png", bbox_inches='tight', dpi=300)
     st.image("prediction_text.png")
