@@ -23,51 +23,106 @@ model = joblib.load('MLP.pkl')
 
 # 特征范围定义（根据提供的特征范围和数据类型）
 feature_ranges = {
-    "主要症状": {  # 主要症状（0=颈痛, 1=颈痛伴活动受限, 2=颈痛伴上肢痛, 3=颈痛伴上肢无力, 4=颈痛伴头晕头痛）
+    "主要症状": {
         "type": "categorical",
         "options": [0, 1, 2, 3, 4]
     },
-    "年龄": {  # 年龄（数值型，范围14.0至88.0，默认50.0）
+    "年龄": {
         "type": "numerical",
         "min": 14.0,
         "max": 88.0,
         "default": 50.0
     },
-    "恶风寒": {  # 恶风寒（0=无, 1=有）
+    "恶风寒": {
         "type": "categorical",
         "options": [0, 1]
     },
-    "持续时间": {  # 持续时间（0=1周以内, 1=1周-1月, 2=1月-3月, 3=3月-1年, 4=1年以上）
+    "持续时间": {
         "type": "categorical",
         "options": [0, 1, 2, 3, 4]
     },
-    "旋颈试验": {  # 旋颈试验（0=无, 1=有）
+    "旋颈试验": {
         "type": "categorical",
         "options": [0, 1]
     },
-    "脉象": {  # 脉象（0=脉沉, 1=脉浮, 2=脉滑, 3=脉濡, 4=脉缓, 5=脉紧, 6=脉弱, 7=脉细, 8=脉涩, 9=脉弦, 10=脉数, 11=脉快）
+    "脉象": {
         "type": "categorical",
         "options": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     },
-    "舌质": {  # 舌质（0=舌暗, 1=舌红, 2=舌淡, 3=舌胖）
+    "舌质": {
         "type": "categorical",
         "options": [0, 1, 2, 3]
     },
-    "诱因": {  # 诱因（0=无, 1=风寒, 2=伏案, 3=落枕）
+    "诱因": {
         "type": "categorical",
         "options": [0, 1, 2, 3]
     },
-    "颈椎屈伸运动试验": {  # 颈椎屈伸运动试验（0=无, 1=有）
+    "颈椎屈伸运动试验": {
         "type": "categorical",
         "options": [0, 1]
     }
 }
 
+# 分类变量中文标签映射
+label_mapping = {
+    "主要症状": {
+        0: "颈痛",
+        1: "颈痛伴活动受限",
+        2: "颈痛伴上肢痛",
+        3: "颈痛伴上肢无力",
+        4: "颈痛伴头晕头痛"
+    },
+    "恶风寒": {
+        0: "无",
+        1: "有"
+    },
+    "持续时间": {
+        0: "1周以内",
+        1: "1周-1月",
+        2: "1月-3月",
+        3: "3月-1年",
+        4: "1年以上"
+    },
+    "旋颈试验": {
+        0: "无",
+        1: "有"
+    },
+    "脉象": {
+        0: "脉沉",
+        1: "脉浮",
+        2: "脉滑",
+        3: "脉濡",
+        4: "脉滑",
+        5: "脉缓",
+        6: "脉紧",
+        7: "脉弱",
+        8: "脉细",
+        9: "脉涩",
+        10: "脉弦",
+        11: "脉数"
+    },
+    "舌质": {
+        0: "舌暗",
+        1: "舌红",
+        2: "舌淡",
+        3: "舌胖"
+    },
+    "诱因": {
+        0: "无",
+        1: "风寒",
+        2: "伏案",
+        3: "落枕"
+    },
+    "颈椎屈伸运动试验": {
+        0: "无",
+        1: "有"
+    }
+}
+
 # Streamlit 界面
 st.title("朱立国教授名老中医颈椎病辨证决策辅助模型")
-
-# 动态生成输入项
 st.header("请输入以下特征:")
+
 feature_values = []
 for feature, properties in feature_ranges.items():
     if properties["type"] == "numerical":
@@ -78,9 +133,12 @@ for feature, properties in feature_ranges.items():
             value=float(properties["default"]),
         )
     elif properties["type"] == "categorical":
+        # 获取中文标签映射
+        labels = label_mapping[feature]
         value = st.selectbox(
-            label=f"{feature} (Select a value)",
+            label=f"{feature}",
             options=properties["options"],
+            format_func=lambda x: labels[x]  # 显示中文标签
         )
     feature_values.append(value)
 
